@@ -20,9 +20,12 @@
         <h2>博客后台登录</h2>
         <div class="login-top">
             <h1>登录信息</h1>
-            <form action="<c:url value="doLogin"/>" method="post">
+            <form action="<c:url value="doLogin"/>" method="post">           
                 <input type="text" name="name" placeholder="用 户 名">
                 <input type="password" name="password" placeholder="密 码">
+             <c:if test="${!empty errorMsg}">
+	        	<h3 style="color:red;">${errorMsg}</h3>
+	        </c:if>
                 <div class="forgot">
                 	<a href="<c:url value="register"/>">注册</a>
                 <input type="submit" value="login">

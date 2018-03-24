@@ -16,7 +16,7 @@
        http://www.springframework.org/schema/mvc 
        http://www.springframework.org/schema/mvc/spring-mvc.xsd"
        default-autowire="byName" default-lazy-init="true">
-             
+              
 	<!--排除所有的action-->
     <context:component-scan base-package="com.blog" >
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

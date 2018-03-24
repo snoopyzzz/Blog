@@ -32,9 +32,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) throws Exception {
 		
-		User user = (User) request.getSession().getAttribute("currentUser");
+		User user = (User) request.getSession().getAttribute("existUser");
 		String name = user.getName();
-		System.out.println("进入:" + name);
+		
 		if (user == null) {
 			System.out.println("进入springmvc拦截器");
 			System.out.println("尚未登录，调到登录页面");
@@ -43,7 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 					.forward(request, response);
 			return false;
 		}
-
+		System.out.println("进入:" + name);
 		return true;
 	}
 
