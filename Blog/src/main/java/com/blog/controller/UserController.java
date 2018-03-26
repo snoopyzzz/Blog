@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -101,4 +102,72 @@ public class UserController {
 		}
 		return view;
 	}
+	
+	/**
+	 * 修改个人联系信息
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/doModify")
+	public String modify(HttpServletRequest req, ModelMap map) {
+		User loginUser = (User) req.getSession().getAttribute("existUser");
+
+		map.put("user", loginUser);
+		return "admin/dataModify";
+	}
+
+	/**
+	 * 修改普通资料
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/updateUser")
+	public String updateUserdata(User user) {
+		User u = userService.findUser(user.getId());
+		u.setEmail(user.getEmail());
+		u.setPhone(user.getPhone());
+		u.setQq(user.getQq());
+		u.setInfo(user.getInfo());
+		userService.updateUser(u);
+		return "admin/dataModify";
+	}
+	
+	/**
+	 * 查询密码
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/userModify")
+	public String doUser(ModelMap map,HttpServletRequest req) {
+		User loginUser = (User) req.getSession().getAttribute("existUser");
+		User user = userService.findUser(loginUser.getId());
+		userService.updateUserPassword(user);
+		map.put("user", user);
+		System.out.println("user,更新密码成功");
+		return "admin/userModify";
+	}
+
+	/**
+	 * 修改账号密码
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/updateUserPassword")
+	public String updateUserP(User user) {
+		userService.updateUserPassword(user);;
+		System.out.print("密码更新成功");
+		return "admin/userModify";
+	}
+	
+	/**
+	 * 退出登录
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping(value = "/SignOut")
+	public String SignOut(HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		session.removeAttribute("existUser");
+		return "redirect:login";
+	}
+	
+	
 }

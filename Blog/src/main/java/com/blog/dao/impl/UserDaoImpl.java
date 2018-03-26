@@ -22,15 +22,8 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 		return null;
 	}
 
-	public User findUser(int i) {
-		return super.findById(i);
-	}
-   /**
-    * 更新基本资料
-    */
-	public void updateUser(User user) {
-		super.update(user);		
-	}
+
+
 
     /**
      * 更新密码，账号

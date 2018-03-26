@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE>
 <html>
 
@@ -15,7 +19,7 @@
 	href="<c:url value="/resources/css/reset.css"/>" />
 <link type="text/css" rel="stylesheet"
 	href="<c:url value="/resources/css/background.css"/>" />
-
+<base href="<%=basePath%>">
 </head>
 
 <body>
@@ -24,7 +28,7 @@
 		<nav class="navigation">
 			<ul>
 				<li>欢迎您！</li>
-				<li>${sessionScope.username.username}</li>
+				<li>${sessionScope.existUser.name}</li>
 				<li><a href="SignOut">退出</a></li>
 			</ul>
 		</nav>
@@ -37,7 +41,7 @@
 						<span></span>后台设置
 					</h4>
 					<div class="list-item none">
-						<a href="admin/doModify">基本资料</a> <a href="doUser/admin/userModify">密码修改</a>
+						<a href="admin/doModify">基本资料</a> <a href="admin/userModify">密码修改</a>
 					</div>
 				</li>
 				<li>

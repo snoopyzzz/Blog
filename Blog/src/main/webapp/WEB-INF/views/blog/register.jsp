@@ -77,11 +77,11 @@
 	        <c:if test="${!empty errorMsg}">
 	        	<h3 style="color:red;">${errorMsg}</h3>
 	        </c:if>        	
-            <form action="<c:url value="doRegister" />" method="post" >
+            <form action="<c:url value="doRegister" />" method="post">
                 <input type="text" name="name" id="name" placeholder="用 户 名" onblur="checkUser();"  />
                 <span id="checkUN"></span>
-                <input type="text" name="password" id="pwd1" placeholder="密 码">
-                <input type="text" name="pwd_confirm" id="pwd2" placeholder="密码确认" onkeyup="validate()"><span id="tishi"></span>
+                <input type="password" name="password" id="pwd1" placeholder="密 码">
+                <input type="password" name="pwd_confirm" id="pwd2" placeholder="密码确认" onkeyup="validate()"><span id="tishi"></span>
                 <input type="text" name="email" placeholder="email"/>
                 <input type="text" name="phone" placeholder="phone"/>
                 <input type="text" name="qq" placeholder="QQ"/>                
@@ -121,11 +121,11 @@
               } else if (data == 2) {
                   document.getElementById("checkUN").innerHTML = "<b style='color:red'>不能为空</b>";
               } else if (data == 3) {
-                  document.getElementById("checkUN").innerHTML = "<b style='color:green'>该用户名可用</b>"
+                  document.getElementById("checkUN").innerHTML = "<b style='color:green'>该用户名可用</b>";
               } else if (data == 0) {
-                  document.getElementById("checkUN").innerHTML = "<b style='color:red'>ajax成功返回值为空</b>"
+                  document.getElementById("checkUN").innerHTML = "<b style='color:red'>ajax成功返回值为空</b>";
               } else {
-                  document.getElementById("checkUN").innerHTML = "<b style='color:red'>未知错误</b>"
+                  document.getElementById("checkUN").innerHTML = "<b style='color:red'>未知错误</b>";
               }
           }
           
