@@ -78,19 +78,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</ul>
 			</div>
 			<div class="main">
-				<form action="admin/updateUserPassword" method="post">
+			<c:if test="${!empty Message}">
+	        	<h3 style="color:red;">${Message}</h3>
+	        </c:if>       
+				<form action="admin/updateUserPassword" method="post" onsubmit="return check();">
 					<input type="hidden" name="id" value="${user.id}" /> 
-					<table class="insert-tab">
-						<tbody>
+					<input type="hidden"  name="name" value="${user.name}" >	
+					<table class="insert-tab">  
+						<tbody> 
+					    	<tr class="tr">
+								<th><i class="require-red">*</i>原密码：</th>
+								<td><input class="content-title" id="originalPwd" name="originalPwd"
+									size="50"  type="password" ></td>
+							</tr>
 							<tr class="tr">
-								<th><i class="require-red">*</i>name：</th>
-								<td><input class="content-title" id="name" name="name"
-									size="50" value="${user.name}" type="text">								
-							</tr>							
-							<tr class="tr">
-								<th><i class="require-red">*</i>password：</th>
+								<th><i class="require-red">*</i>新密码：</th>
 								<td><input class="content-title" id="password" name="password"
-									size="50" value="${user.password}" type="text"></td>
+									size="50"  type="password" ></td>
+							</tr>
+							<tr class="tr">
+								<th><i class="require-red">*</i>确认密码：</th>
+								<td><input class="content-title"  name="pwd_confirm"
+									size="50"  type="password" id="pwd2"></td>
 							</tr>
 
 							<tr class="tr">
@@ -112,6 +121,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="<c:url value="/resources/js/menu.js"/>"></script>
 </body>
 
-
+   <script>     
+      function check(){
+   var password = document.getElementById("password").value;
+   var repsword = document.getElementById("pwd2").value;
+   if(password === ''){
+      alert('密码不能为空');
+      return false;
+   }
+   if(password != repsword) {
+      alert("两次密码不同，请重新输入");
+      return false;
+   }
+    
+}
+      </script>
 
 </html>

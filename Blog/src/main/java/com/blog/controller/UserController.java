@@ -30,17 +30,28 @@ public class UserController {
 	@Resource	
 	private UserService userService;
 	
+	/*
+	 * 测试用
+	 * 
+	 */
 	@RequestMapping(value = "/test")
 	public String Test() {
 		return "admin/test";
 	}
 	
-	
+	/*
+	 * 进入注册页面
+	 */
 	@RequestMapping(value = "/register")
 	public String Register() {
 		return "blog/register";
 	}
 	
+	/*
+	 * 执行注册功能，
+	 * 并验证用户名是否相同
+	 * 有相同用户名，返回注册页面并提示用户名相同
+	 */
 	@RequestMapping(value = "/doRegister", method = RequestMethod.POST)
 	public ModelAndView doRegister(User user, HttpServletRequest req) {
 		ModelAndView view = new ModelAndView();		
@@ -74,6 +85,9 @@ public class UserController {
         }
 	}  
 	
+	/*
+	 * 进入登录页面
+	 */
 	@RequestMapping(value = "/login")
 	public String Login() {
 		return "admin/login";
@@ -84,6 +98,7 @@ public class UserController {
 	 * @param user
 	 * @param req
 	 * @return
+	 * 如果用户名密码错误，会返回登录界面并提示
 	 */
 	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
 	public ModelAndView doLogin(User user, HttpServletRequest req) {
@@ -104,8 +119,9 @@ public class UserController {
 	}
 	
 	/**
-	 * 修改个人联系信息
+	 * 修改个人信息
 	 * @return
+	 * 进入修改页面
 	 */
 	@RequestMapping(value = "/admin/doModify")
 	public String modify(HttpServletRequest req, ModelMap map) {
@@ -116,9 +132,10 @@ public class UserController {
 	}
 
 	/**
-	 * 修改普通资料
+	 * 修改个人信息
 	 * @param user
 	 * @return
+	 * 执行修改个人信息
 	 */
 	@RequestMapping(value = "/admin/updateUser")
 	public String updateUserdata(User user) {
@@ -132,8 +149,9 @@ public class UserController {
 	}
 	
 	/**
-	 * 查询密码
+	 * 修改密码
 	 * @return
+	 * 进入修改密码页面
 	 */
 	@RequestMapping(value = "/admin/userModify")
 	public String doUser(ModelMap map,HttpServletRequest req) {
@@ -146,15 +164,29 @@ public class UserController {
 	}
 
 	/**
-	 * 修改账号密码
+	 * 修改密码
 	 * @param user
 	 * @return
+	 * 执行修改操作
+	 * 并验证原密码是否相符
 	 */
 	@RequestMapping(value = "/admin/updateUserPassword")
-	public String updateUserP(User user) {
-		userService.updateUserPassword(user);;
-		System.out.print("密码更新成功");
-		return "admin/userModify";
+	public ModelAndView updateUserPassword(User user, String originalPwd, HttpServletRequest req) {
+		ModelAndView view = new ModelAndView();
+		System.out.println("原密码：" + originalPwd);
+		User loginUser = (User) req.getSession().getAttribute("existUser");
+		if(loginUser.getPassword().equals(originalPwd)) {
+			userService.updateUserPassword(user);
+			System.out.println("密码更新成功");
+			view.addObject("Message", "密码修改成功！");
+			view.setViewName("admin/userModify");
+		}
+		else {
+			System.out.println("原密码输入错误，密码更新失败");
+			view.addObject("Message", "密码修改失败！原密码错误！");
+			view.setViewName("admin/userModify");
+		}
+		return view;
 	}
 	
 	/**
